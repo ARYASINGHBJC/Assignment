@@ -92,8 +92,8 @@ union
 select empName,deptName from tekemp right join tekdept on tekemp.deptID = tekdept.deptID
 ;
 
--- Q6 
+-- Q6 Fetch details of all emp, their manager, their department and the projects they are working on
 select * from tekemp join tekmng on tekemp.managerId = tekmng.managerId  join tekdept on tekdept.deptID = tekemp.deptID join tekprj on tekprj.teamMemberId = tekemp.empid order by empid;
 
--- Q7
+-- Q7 Fetch details of only employee, their manager, and the projects they are working on
 select * from tekemp left join tekmng on tekemp.managerId = tekmng.managerId  left join tekdept on tekdept.deptID = tekemp.deptID left join tekprj on tekprj.teamMemberId = tekemp.empid order by empid;
