@@ -62,3 +62,20 @@ select team,
     group by team
     order by total desc
     limit 10;
+
+
+select t1.year,t1.team,count(t1.medal) as medalsWon,TotalMedals,
+(count(t1.medal)/TotalMedals)*100 as percent from athlete as t1
+join (select year,count(medal) as TotalMedals from athlete group by year) as t2 on t1.year = t2.year
+group by t1.year,t1.team 
+order by 
+percent desc
+limit 5;
+
+-- 19 
+with temporaryTable(totalMedals) as (select count(medal) from athlete)
+select distinct team
+-- ,totalMedals,count(medal)
+,(count(medal)/totalMedals)*100 as percent from athlete,temporaryTable 
+where team in ("China","United States","Russia","Australia","Great Britain")
+group by team,totalMedals order by percent desc;
