@@ -167,7 +167,24 @@ ORDER BY avg_departure_delay ASC;
 
 
 -- x)	Suggest reasons of airlines delays and suggest, build solutions for it.
-/*  Strategic Submission */
+SELECT 
+    COUNT(CASE WHEN arrival_delay > 0 AND airline_delay IS NOT NULL AND airline_delay >= 0 THEN 1 END) * 100.0 / 
+    COUNT(CASE WHEN arrival_delay > 0 OR departure_delay > 0 THEN 1 END) AS airline_delay_percentage_arrival,
+    
+    COUNT(CASE WHEN departure_delay > 0 AND airline_delay IS NOT NULL AND airline_delay >= 0 THEN 1 END) * 100.0 / 
+    COUNT(CASE WHEN arrival_delay > 0 OR departure_delay > 0 THEN 1 END) AS airline_delay_percentage_departure,
+    
+    COUNT(CASE WHEN arrival_delay > 0 AND weather_delay IS NOT NULL AND weather_delay >= 0 THEN 1 END) * 100.0 / 
+    COUNT(CASE WHEN arrival_delay > 0 OR departure_delay > 0 THEN 1 END) AS weather_delay_percentage_arrival,
+    
+    COUNT(CASE WHEN departure_delay > 0 AND weather_delay IS NOT NULL AND weather_delay >= 0 THEN 1 END) * 100.0 / 
+    COUNT(CASE WHEN arrival_delay > 0 OR departure_delay > 0 THEN 1 END) AS weather_delay_percentage_departure
+    
+FROM 
+    flights
+WHERE 
+    arrival_delay IS NOT NULL 
+    OR departure_delay IS NOT NULL;
 
 
 -- y)	Create a stored procedure to find weeks with maximum flights delays count.
